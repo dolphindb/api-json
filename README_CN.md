@@ -36,7 +36,7 @@ var option = {
 
 ```json
 var code = "1+2";
-code = encodeURIComponent(code);
+codestr = encodeURIComponent(code);
 paramJson = {
 	"sessionID": "942605602",
 	"functionName": "executeCode",
@@ -44,7 +44,7 @@ paramJson = {
 		"name": "script",
 		"form": "scalar",
 		"type": "string",
-		"value": code
+		"value": codestr
 	}]
 }
 ```
