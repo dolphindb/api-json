@@ -1,4 +1,4 @@
-## DolphinDB WebApi
+## DolphinDB Json Api
 
 ### 简介
 
