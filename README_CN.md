@@ -2,17 +2,17 @@
 
 ### 简介
 
-DolphinDB WebApi是DolphinDB提供的访问Server 资源的程序接口,通过向url(http://Ip:Port) post json数据包，即可使server运行指定脚本代码，并将结果以json的格式返回。
+DolphinDB Json Api是DolphinDB提供的访问Server 资源的程序接口,通过向url(http://Ip:Port) post json数据包，即可使server运行指定脚本代码，并将结果以json的格式返回。
 
 ### 适用场景
 
-任何编程语言，只要支持通过http协议向指定url提交数据，能够解析json格式数据包，那么就可以使用 DolphinDB WebApi访问DolphinDB Server。
+任何编程语言，只要支持通过http协议向指定url提交数据，能够解析json格式数据包，那么就可以使用 DolphinDB Json Api访问DolphinDB Server。
 
 ### 新手入门示例
 
 #### 返回值对象示例
 
-通过一个简单的示例，让大家直观的了解WebApi是如何调用的。
+通过一个简单的示例，让大家直观的了解Json Api是如何调用的。
 
 这里我们简单的让server做一个1+2=3的运算。只要组织一个类似下面的格式的json数据包，然后把数据包post到datanode url，比如 http://localhost:8848。
 > * javascript调用示例
@@ -249,7 +249,7 @@ server.run("1+2",function(re){
 });
 ```
 
-### DolphinDB WebApi Reference
+### DolphinDB Json Api Reference
 1. run：异步执行脚本
 ```
 new DatanodeServer("http://[datanodeIp]:[port]").run(script,function(re){
