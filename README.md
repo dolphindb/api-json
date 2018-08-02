@@ -1,4 +1,4 @@
-## DolphinDB Json Api
+## DolphinDB Web Api
 
 DolphinDB Web API is an API that programs can access server through url(http://Ip:Port) by posting data in JSON format, which can make the server to run the specified script code and return the result in JSON format.
 
