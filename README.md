@@ -226,23 +226,24 @@ var paramJson = {
 
 ### Javascript DolphinDB WebApi Package
 
-我们为javascript的开发者提供了访问webApi的开发包，封装如下方法：
-* CallWebApi: 提供 CallWebApi方法，将Json数据包提交到指定url。
-* CodeExecutor: 提供run和runSync方法，是通过callWebApi的方式调用了server的executeCode方法,封装了json参数的组装过程。
-* DolphinEntity：返回结果处理类。提供toScalar，toVector，toTable，toMatrix 方法，可以方便的将返回结果从json数据包中解析成为 javascript 的json object或json array，开发者根据返回的DataForm选择合适的方法来解析结果。
+* CallWebApi: submit data in JSON format to a server url。
+* CodeExecutor: provide two methods run and runSyn: encapsulating all input parameters in JSON.
+* DolphinEntity：return results handling class: providing toScalar，toVector，toTable，and toMatrix methods to easily convert returned results in JSON into the json object or json array of javascript. Therefore, a developer can select the appropriate method to parse the result based on the returned data forms.
 
- 要使用javascript 开发包，需要引入 `callWebApi.js, executeCode.js, dolphinApi.js`
+ To use the javascript development kit, you need to include `callWebApi.js, executeCode.js, dolphinApi.js`
 
->* 注意javascript开发包内部依赖JQuery,只能在浏览器环境下使用, 不适用nodejs环境。
+>* Note that the javascript development kit relies on javascript library: JQuery and can only be used in a browser environment. It is not applicable to the nodejs environment.
 
-按照上面的例子，同样运行1+2的脚本，利用开发包调用方式如下：
+According to the example above, the script that runs `1+2` can be written as the following. 
 ``` javascript
 var server = new DatanodeServer("http://localhost:8848");
 var result = new DolphinEntity(server.runSync("1+2")).toScalar();
 ```
-在js里得到的result = 3。
+The returned result is 3.
 
-上面的代码使用同步方式调用，javascript脚本会等待server执行完毕后才会继续，如果需要使用异步方式调用，代码如下：
+
+The above code is called `synchronously`. The javascript script will wait for the server to finish executing, and if it needs to be called `asynchronously`, the code is as follows:
+
 ```
 var server = new DatanodeServer("http://localhost:8848");
 server.run("1+2",function(re){
@@ -252,22 +253,22 @@ server.run("1+2",function(re){
 ```
 
 ### DolphinDB Json Api Reference
-1. run：异步执行脚本
+1. run：run asynchronously
 ```
 new DatanodeServer("http://[datanodeIp]:[port]").run(script,function(re){
        //var jsonstr = re;
        //var DolphinEntity(jsonstr);
 })
 ```
-2. runSync：同步执行脚本
+2. runSync：run synchronously
 ```
 var re = new DatanodeServer("http://[datanodeIp]:[port]").runSync(script);
 ```
-3. login：登录系统
+3. login: login server
 ```
 new DatanodeServer("http://[datanodeIp]:[port]").login("admin","pass");
 ```
-4. logout：登出当前用户
+4. logout：logout server
 ```
 new DatanodeServer("http://[datanodeIp]:[port]").logout();
 ```
