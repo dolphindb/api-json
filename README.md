@@ -1,8 +1,6 @@
 ## DolphinDB Json Api
 
-### Introduction
-
-DolphinDB Json Api is a program interface for accessing Server resources provided by DolphinDB. By sending a "POST" json packet to url(http://Ip:Port), the server can run the specified script code and return the result in json format.
+DolphinDB Web API is an API that programs can access server through url(http://Ip:Port) by posting data in JSON format, which can make the server to run the specified script code and return the result in JSON format.
 
 ### Applicable scenarios
 
@@ -67,9 +65,9 @@ resultJson = {
 
 #### Return as a table
 
-这个示例我们会通过DolphinDB script ：select * from table(1..3 as id,'tom' 'bob' 'tony' as name)， 在server端生成一个table,并以json格式返回给客户端，由于DolphinDB Server是以列式存储table数据，所以返回的json也是以多个一维Array组成。
+In this example, we will generate a table on the server side through DolphinDB script :`select * from table(1..3 as id,'tom' 'bob' 'tony' as name)`, and return it to the client in JSON format, DolphinDB Server stores table data in columns, so the returned json is also composed of multiple one-dimensional Arrays representing the corresponding DolphinDB columns.
 
-> * 入参格式
+> * Input arameter format
 ```
 var code = "select * from table(1..3 as id,'tom' 'bob' 'tony' as name)";
 code = encodeURIComponent(code);
@@ -84,7 +82,7 @@ var paramJson = {
     }]
 };
 ```
-> * 返回结果格式
+> * Return result format
 ```
 {
 	"sessionID": "1130397736",
@@ -111,10 +109,12 @@ var paramJson = {
 }
 ```
 
-#### 参数为Table对象示例
-这个示例我们以server端的equal join function(ej)为例，通过对两个table进行ej，返回的join结果也是table。
+#### Example of returning as a table
 
-为了方便理解，下面以简化方式列出入参和返回结果。
+
+In this example, we take the server's equal join function (`ej`) as an example. By performing `ej` on two tables, the result of the join is also a table.
+
+For ease of understanding, the input and output results are listed in a simplified manner.
 
 leftTable: table(1 2 3 as id,'a' 'b' 'c' as name)
 
@@ -122,7 +122,7 @@ rightTable: table(2 3 4 as id,'e' 'f' 'g' as name)
 
 resultTable: table(2,3 as id,'b' 'c' as name,'e' 'f' as rightTable_name)
 
-> * 入参格式
+> * Input
 
 ```
 var paramJson = {
@@ -171,7 +171,7 @@ var paramJson = {
     };
 ```
 
-> * 返回结果格式
+> * Output
 
 ```
 {
@@ -205,23 +205,23 @@ var paramJson = {
 }
 ```
 
-### Json包格式详解
+### Details of output JSON format 
 
-######  [提交格式]
-* SessionID：指定调用的会话ID，初次调用会话ID为0，在一个用户登录会话期间，同一个Server会将SessionID跟登录用户关联。
+######  [Input]
+* SessionID：specifies the session ID connecting to DolphinDB. The initial session ID is 0. During a user login session, the same server associates the SessionID with the login user.
 
-* functionName：指定调用的函数名称。
+* functionName：specifies the name of the function to be called.
 
-* params: functionName指定参数所需要的入参，params是一个json array。
+* params: an json array representing the input parameters of the specificed functionName. 
 
-######  [返回格式]
-* sessionID：本次脚本执行所在的会话ID。
+######  [Output]
+* sessionID： the session ID where the script is executed.
 
-* resultCode : 0-执行正常  1-执行异常。
+* resultCode : 0-Normal  1-Exception。
 
-* msg：当resultCode为1时，此处会告知异常提示信息。
+* msg：wehn resultCode is 1, exception information will be throwed. 
 
-* object：脚本执行返回的对象信息。
+* object： The returned object information after the script execution.
 
 
 ### Javascript DolphinDB WebApi Package
