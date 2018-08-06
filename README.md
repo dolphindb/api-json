@@ -29,7 +29,7 @@ var option = {
     }
     $.ajax(option);
 ```
-> * 入参格式
+> * Input parameter format
 
 *Note that in the browser environment, special symbols such as "+" needs to be url encoded through function encodeURIComponent* before sending to DolphinDB server.
 
@@ -67,7 +67,7 @@ resultJson = {
 
 In this example, we will generate a table on the server side through DolphinDB script :`select * from table(1..3 as id,'tom' 'bob' 'tony' as name)`, and return it to the client in JSON format, DolphinDB Server stores table data in columns, so the returned json is also composed of multiple one-dimensional Arrays representing the corresponding DolphinDB columns.
 
-> * Input arameter format
+> * Input parameter format
 ```
 var code = "select * from table(1..3 as id,'tom' 'bob' 'tony' as name)";
 code = encodeURIComponent(code);
