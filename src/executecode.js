@@ -16,7 +16,7 @@ function CodeExecutor(url) {
             $.extend(p, params);
         }
 
-        CallWebApi(this.apiurl, p, function(re) {
+        callWebApi(this.apiurl, p, function(re) {
             var resultobj = {};
             if (typeof re == "string") {
                 resultobj = JSON.parse(re);
@@ -48,6 +48,6 @@ function CodeExecutor(url) {
         if (param) {
             $.extend(p, param);
         }
-        return CallWebApiSync(this.apiurl, p)
+        return callWebApiSync(this.apiurl, p)
     };
 }

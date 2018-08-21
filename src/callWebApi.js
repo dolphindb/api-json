@@ -1,6 +1,6 @@
 var session_storage_id = "dolphindb_session_id";
 
-function CallWebApi(apiurl, paramstr, sucfunc, errfunc, customOption) {
+function callWebApi(apiurl, paramstr, sucfunc, errfunc, customOption) {
 
     if (typeof CurrentSessionID === 'undefined') {
         var CurrentSessionID = 0;
@@ -50,7 +50,7 @@ function CallWebApi(apiurl, paramstr, sucfunc, errfunc, customOption) {
     $.ajax(option);
 };
 
-function CallWebApiSync(apiurl, paramstr) {
+function callWebApiSync(apiurl, paramstr) {
     if (typeof elem === 'undefined')
         elem = $('#execute-spin');
     if (typeof CurrentSessionID === 'undefined') {
@@ -88,7 +88,7 @@ function CallWebApiSync(apiurl, paramstr) {
     return reobj
 };
 
-function CallWebApiWithoutSession(apiurl, paramstr, sucfunc, errfunc, customOption) {
+function callWebApiWithoutSession(apiurl, paramstr, sucfunc, errfunc, customOption) {
 
     if (typeof elem === 'undefined')
         elem = $('#execute-spin');
@@ -130,7 +130,7 @@ function CallWebApiWithoutSession(apiurl, paramstr, sucfunc, errfunc, customOpti
     $.ajax(option);
 };
 
-function CallWebApiSyncWithoutSession(apiurl, paramstr) {
+function callWebApiSyncWithoutSession(apiurl, paramstr) {
     if (typeof elem === 'undefined')
         elem = $('#execute-spin');
 

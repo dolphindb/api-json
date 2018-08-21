@@ -89,7 +89,7 @@ DatanodeServer.prototype = {
                 "value": chunkId
             }]
         };
-        CallWebApi(this._url, p, succallback, failcallback);
+        callWebApi(this._url, p, succallback, failcallback);
     },
 
     getTablesByTabletChunk: function (chunkId, succallback, failcallback) {
@@ -103,7 +103,7 @@ DatanodeServer.prototype = {
                 "value": chunkId
             }]
         };
-        CallWebApi(this._url, p, succallback, failcallback);
+        callWebApi(this._url, p, succallback, failcallback);
     },
 
     run: function (script, succallback) {
@@ -125,7 +125,7 @@ DatanodeServer.prototype = {
                 "value": ticket
             }]
         };
-        CallWebApi(this._url, p, callback);
+        callWebApi(this._url, p, callback);
     }
 }
 
@@ -193,7 +193,7 @@ ControllerServer.prototype = {
             ]
         };
 
-        CallWebApi(this._url, p, callback);
+        callWebApi(this._url, p, callback);
     },
     deleteGroupMember: function (groupId, userIds,callback) {
         var p = {
@@ -213,7 +213,7 @@ ControllerServer.prototype = {
             ]
         };
 
-        CallWebApi(this._url, p, callback);
+        callWebApi(this._url, p, callback);
     },
 
     getUsersByGroupId: function (groupId, callback) {
@@ -319,7 +319,7 @@ ControllerServer.prototype = {
             }
             ]
         };
-        CallWebApi(this._url, p, callback);
+        callWebApi(this._url, p, callback);
     },
     deny: function (id, permisionType, objs, callback) {
         var p = {
@@ -343,7 +343,7 @@ ControllerServer.prototype = {
             }
             ]
         };
-        CallWebApi(this._url, p, callback);
+        callWebApi(this._url, p, callback);
     },
     revoke: function (id, permisionType, callback) {
         this.exec.run("revoke('" + id + "'," + permisionType + ")", function (re) {
