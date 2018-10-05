@@ -263,7 +263,7 @@ var re = new DatanodeServer("http://[datanodeIp]:[port]").runSync(script);
 ```
 3. login：登录系统
 ```
-new DatanodeServer("http://[datanodeIp]:[port]").login("admin","pass");
+new DatanodeServer("http://[datanodeIp]:[port]").login("admin","123456");
 ```
 4. logout：登出当前用户
 ```
