@@ -1,5 +1,5 @@
 /*=============================================
-Decription  : Dolphin API
+Description  : Dolphin API
 Author      : LinL 
 Date        : 2018-05-27
 ==============================================*/
