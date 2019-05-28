@@ -1,20 +1,19 @@
-## DolphinDB Json Api
+## DolphinDB WebAPI
 
 ### 简介
 
-DolphinDB Json Api是DolphinDB提供的访问Server 资源的程序接口,通过向url(http://Ip:Port) post json数据包，即可使server运行指定脚本代码，并将结果以json的格式返回。
+DolphinDB WebAPI是访问DolphinDB server资源的程序接口。向url(http://IP:Port) post JSON数据包，即可使DolphinDB server运行指定脚本代码，并将结果以JSON的格式返回。
 
-### 适用场景
-
-任何编程语言，只要支持通过http协议向指定url提交数据，能够解析json格式数据包，那么就可以使用 DolphinDB Json Api访问DolphinDB Server。
+任何编程语言，只要支持通过http协议向指定url提交数据，且能够解析JSON格式数据包，那么就可以使用DolphinDB WebAPI访问DolphinDB server。
 
 ### 新手入门示例
 
 #### 返回值对象示例
 
-通过一个简单的示例，让大家直观的了解Json Api是如何调用的。
+通过一个简单的示例，让大家直观的了解WebAPI是如何调用的。
 
-这里我们简单的让server做一个1+2=3的运算。只要组织一个类似下面的格式的json数据包，然后把数据包post到datanode url，比如 http://localhost:8848。
+这里我们在DolphinDB server中做一个1+2=3的运算。组织一个类似下面的格式的JSON数据包，然后把数据包post到datanode url，比如 http://localhost:8848。
+
 > * javascript调用示例
 ``` javascript
 var paramJson = {...}
@@ -32,11 +31,11 @@ var option = {
 ```
 > * 入参格式
 
-*注意在浏览器环境下，json里包含+号等特殊符号会被jsonParser处理掉，所以提交前先对要提交的数据做encodeURIComponent*
+*注意在浏览器环境下，JSON里包含+号等特殊符号会被jsonParser处理掉，所以提交前先对要提交的数据做encodeURIComponent*
 
 ```json
 var code = "1+2";
-codestr = encodeURIComponent(code);
+code = encodeURIComponent(code);
 paramJson = {
 	"sessionID": "942605602",
 	"functionName": "executeCode",
@@ -44,7 +43,7 @@ paramJson = {
 		"name": "script",
 		"form": "scalar",
 		"type": "string",
-		"value": codestr
+		"value": code
 	}]
 }
 ```
@@ -110,7 +109,8 @@ var paramJson = {
 ```
 
 #### 参数为Table对象示例
-这个示例我们以server端的equal join function(ej)为例，通过对两个table进行ej，返回的join结果也是table。
+
+这个示例中， 我们以server端的equal join function(ej)为例，通过对两个table进行ej，返回的join结果也是table。
 
 为了方便理解，下面以简化方式列出入参和返回结果。
 
@@ -118,7 +118,7 @@ leftTable: table(1 2 3 as id,'a' 'b' 'c' as name)
 
 rightTable: table(2 3 4 as id,'e' 'f' 'g' as name)
 
-resultTable: table(2,3 as id,'b' 'c' as name,'e' 'f' as rightTable_name)
+resultTable: table(2 3 as id,'b' 'c' as name,'e' 'f' as rightTable_name)
 
 > * 入参格式
 
@@ -203,9 +203,10 @@ var paramJson = {
 }
 ```
 
-### Json包格式详解
+### JSON包格式详解
 
 ######  [提交格式]
+
 * SessionID：指定调用的会话ID，初次调用会话ID为0，在一个用户登录会话期间，同一个Server会将SessionID跟登录用户关联。
 
 * functionName：指定调用的函数名称。
@@ -213,6 +214,7 @@ var paramJson = {
 * params: functionName指定参数所需要的入参，params是一个json array。
 
 ######  [返回格式]
+
 * sessionID：本次脚本执行所在的会话ID。
 
 * resultCode : 0-执行正常  1-执行异常。
@@ -224,10 +226,10 @@ var paramJson = {
 
 ### Javascript DolphinDB WebApi Package
 
-我们为javascript的开发者提供了访问webApi的开发包，封装如下方法：
-* CallWebApi: 提供 CallWebApi方法，将Json数据包提交到指定url。
-* CodeExecutor: 提供run和runSync方法，是通过callWebApi的方式调用了server的executeCode方法,封装了json参数的组装过程。
-* DolphinEntity：返回结果处理类。提供toScalar，toVector，toTable，toMatrix 方法，可以方便的将返回结果从json数据包中解析成为 javascript 的json object或json array，开发者根据返回的DataForm选择合适的方法来解析结果。
+我们为javascript的开发者提供了访问webAPI的开发包，封装如下方法：
+* CallWebAPI: 提供 CallWebApi方法，将JSON数据包提交到指定url。
+* CodeExecutor: 提供run和runSync方法，是通过callWebApi的方式调用了server的executeCode方法,封装了JSON参数的组装过程。
+* DolphinEntity：返回结果处理类。提供toScalar，toVector，toTable，toMatrix 方法，可以方便的将返回结果从JSON数据包中解析成为 javascript 的JSON object或JSON array，开发者根据返回的DataForm选择合适的方法来解析结果。
 
  要使用javascript 开发包，需要引入 `callWebApi.js, executeCode.js, dolphinApi.js`
 
@@ -249,7 +251,7 @@ server.run("1+2",function(re){
 });
 ```
 
-### DolphinDB Json Api Reference
+### DolphinDB WebAPI Reference
 1. run：异步执行脚本
 ```
 new DatanodeServer("http://[datanodeIp]:[port]").run(script,function(re){

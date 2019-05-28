@@ -1,20 +1,16 @@
-## DolphinDB Web Api
+## DolphinDB Web API
 
-DolphinDB Web API is an API that programs can access server through url(http://Ip:Port) by posting data in JSON format, which can make the server to run the specified script code and return the result in JSON format.
+DolphinDB Web API is an API that programs can access DolphinDB server through url (http://IP:port) by posting data in JSON format, which instructs the server to run the specified script and return the result in JSON format.
 
-### Applicable scenarios
+Any programming language that supports submitting data to a specified url via the http protocol and parsing JSON formatted packets can use DolphinDB web API:
 
-Any programming language that supports:
-(1) submitting data to a specified url via the http protocol;
-(2) parsing json formatted packets;
-
-### Get it started
+### Examples
 
 #### Return as an object
 
+We conduct 1+2=3 in DolphinDB server. Organize a JSON packet like the JavaScript below and post the packet to the url of a data node, such as "http://localhost:8848".
 
-Here we simply let the server do a 1+2=3 operation. Just organize a json packet like the javascript below and post the packet to the datanode url, such as http://localhost:8848.
-> * javascript
+> * JavaScript
 ``` javascript
 var paramJson = {...}
 var option = {
@@ -29,9 +25,9 @@ var option = {
     }
     $.ajax(option);
 ```
-> * Input parameter format
+> * Input format
 
-*Note that in the browser environment, special symbols such as "+" needs to be url encoded through function encodeURIComponent* before sending to DolphinDB server.
+*Note that in the browser environment, special symbols such as "+" need to be url encoded with function encodeURIComponent before sending to DolphinDB server.
 
 ```json
 var code = "1+2";
@@ -47,7 +43,7 @@ paramJson = {
 	}]
 }
 ```
-> * Return result
+> * Output format
 ```json
 resultJson = {
 	"sessionID": "942605602",
@@ -65,9 +61,9 @@ resultJson = {
 
 #### Return as a table
 
-In this example, we will generate a table on the server side through DolphinDB script :`select * from table(1..3 as id,'tom' 'bob' 'tony' as name)`, and return it to the client in JSON format, DolphinDB Server stores table data in columns, so the returned json is also composed of multiple one-dimensional Arrays representing the corresponding DolphinDB columns.
+In this example, we generate a table on the server side through DolphinDB script `select * from table(1..3 as id,'tom' 'bob' 'tony' as name)`, and return it to the client in JSON format. DolphinDB server stores tables in columns, so the returned JSON is also composed of multiple one-dimensional arrays representing DolphinDB columns.
 
-> * Input parameter format
+> * Input arameter format
 ```
 var code = "select * from table(1..3 as id,'tom' 'bob' 'tony' as name)";
 code = encodeURIComponent(code);
@@ -111,16 +107,13 @@ var paramJson = {
 
 #### Example of returning as a table
 
-
-In this example, we take the server's equal join function (`ej`) as an example. By performing `ej` on two tables, the result of the join is also a table.
-
-For ease of understanding, the input and output results are listed in a simplified manner.
+In this example, we use DolphinDB equal join function `ej` on two tables. The result is also a table.
 
 leftTable: table(1 2 3 as id,'a' 'b' 'c' as name)
 
 rightTable: table(2 3 4 as id,'e' 'f' 'g' as name)
 
-resultTable: table(2,3 as id,'b' 'c' as name,'e' 'f' as rightTable_name)
+resultTable: table(2 3 as id,'b' 'c' as name,'e' 'f' as rightTable_name)
 
 > * Input
 
@@ -252,7 +245,7 @@ server.run("1+2",function(re){
 });
 ```
 
-### DolphinDB Json Api Reference
+### DolphinDB JSON API Reference
 1. run：run asynchronously
 ```
 new DatanodeServer("http://[datanodeIp]:[port]").run(script,function(re){
