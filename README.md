@@ -259,7 +259,7 @@ var re = new DatanodeServer("http://[datanodeIp]:[port]").runSync(script);
 ```
 3. login: login server
 ```
-new DatanodeServer("http://[datanodeIp]:[port]").login("admin","pass");
+new DatanodeServer("http://[datanodeIp]:[port]").login("admin","123456");
 ```
 4. logout：logout server
 ```
