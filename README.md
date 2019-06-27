@@ -29,7 +29,7 @@ var option = {
 
 *Note that in the browser environment, special symbols such as "+" need to be url encoded with function encodeURIComponent before sending to DolphinDB server.
 
-```json
+```javascript
 var code = "1+2";
 codestr = encodeURIComponent(code);
 paramJson = {
@@ -44,7 +44,7 @@ paramJson = {
 }
 ```
 > * Output format
-```json
+```javascript
 resultJson = {
 	"sessionID": "942605602",
 	"resultCode": "0",
@@ -64,7 +64,7 @@ resultJson = {
 In this example, we generate a table on the server side through DolphinDB script `select * from table(1..3 as id,'tom' 'bob' 'tony' as name)`, and return it to the client in JSON format. DolphinDB server stores tables in columns, so the returned JSON is also composed of multiple one-dimensional arrays representing DolphinDB columns.
 
 > * Input arameter format
-```
+```javascript
 var code = "select * from table(1..3 as id,'tom' 'bob' 'tony' as name)";
 code = encodeURIComponent(code);
 var paramJson = {
@@ -79,7 +79,7 @@ var paramJson = {
 };
 ```
 > * Return result format
-```
+```javascript
 {
 	"sessionID": "1130397736",
 	"resultCode": "0",
@@ -117,7 +117,7 @@ resultTable: table(2 3 as id,'b' 'c' as name,'e' 'f' as rightTable_name)
 
 > * Input
 
-```
+```javascript
 var paramJson = {
         "sessionID": "0",
         "functionName": "ej",
@@ -166,7 +166,7 @@ var paramJson = {
 
 > * Output
 
-```
+```javascript
 {
 	"sessionID": "1358033411",
 	"resultCode": "0",
