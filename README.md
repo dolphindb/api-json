@@ -16,7 +16,7 @@ var paramJson = {...}
 var option = {
         url: "http://localhost:8848",
         async: true,
-        data: paramJson,
+        data: JSON.stringify(paramJson),
         type: "POST",
         dataType: "json",
         success: function (data) {
@@ -29,7 +29,7 @@ var option = {
 
 *Note that in the browser environment, special symbols such as "+" need to be url encoded with function encodeURIComponent before sending to DolphinDB server.
 
-```json
+```javascript
 var code = "1+2";
 codestr = encodeURIComponent(code);
 paramJson = {
@@ -44,7 +44,7 @@ paramJson = {
 }
 ```
 > * Output format
-```json
+```javascript
 resultJson = {
 	"sessionID": "942605602",
 	"resultCode": "0",
@@ -64,7 +64,7 @@ resultJson = {
 In this example, we generate a table on the server side through DolphinDB script `select * from table(1..3 as id,'tom' 'bob' 'tony' as name)`, and return it to the client in JSON format. DolphinDB server stores tables in columns, so the returned JSON is also composed of multiple one-dimensional arrays representing DolphinDB columns.
 
 > * Input arameter format
-```
+```javascript
 var code = "select * from table(1..3 as id,'tom' 'bob' 'tony' as name)";
 code = encodeURIComponent(code);
 var paramJson = {
@@ -79,7 +79,7 @@ var paramJson = {
 };
 ```
 > * Return result format
-```
+```javascript
 {
 	"sessionID": "1130397736",
 	"resultCode": "0",
@@ -117,7 +117,7 @@ resultTable: table(2 3 as id,'b' 'c' as name,'e' 'f' as rightTable_name)
 
 > * Input
 
-```
+```javascript
 var paramJson = {
         "sessionID": "0",
         "functionName": "ej",
@@ -166,7 +166,7 @@ var paramJson = {
 
 > * Output
 
-```
+```javascript
 {
 	"sessionID": "1358033411",
 	"resultCode": "0",
@@ -219,49 +219,56 @@ var paramJson = {
 
 ### Javascript DolphinDB WebApi Package
 
-* CallWebApi: submit data in JSON format to a server url。
-* CodeExecutor: provide two methods run and runSyn: encapsulating all input parameters in JSON.
-* DolphinEntity：return results handling class: providing toScalar，toVector，toTable，and toMatrix methods to easily convert returned results in JSON into the json object or json array of javascript. Therefore, a developer can select the appropriate method to parse the result based on the returned data forms.
+To use the javascript development kit, you need to include `DolphinDBConnection.js`, `DolphinDBEntity.js` and jquery development kit.
 
- To use the javascript development kit, you need to include `callWebApi.js, executeCode.js, dolphinApi.js`
+`DolphinDBConnection.js` provides the following methods: `run`, `runFunction`, `login` and `logout`.
 
->* Note that the javascript development kit relies on javascript library: JQuery and can only be used in a browser environment. It is not applicable to the nodejs environment.
+- Run Script
 
-According to the example above, the script that runs `1+2` can be written as the following. 
-``` javascript
-var server = new DatanodeServer("http://localhost:8848");
-var result = new DolphinEntity(server.runSync("1+2")).toScalar();
-```
-The returned result is 3.
+Use __run(script, [callback])__ to run DolphinDB script. For example:
 
-
-The above code is called `synchronously`. The javascript script will wait for the server to finish executing, and if it needs to be called `asynchronously`, the code is as follows:
-
-```
-var server = new DatanodeServer("http://localhost:8848");
+```javascript
+var server = new DolphinDBConnection("http://localhost:8848");
 server.run("1+2",function(re){
-     var reObj = new DolphinEntity(re);
-     var result = reObj.toScalar();
+    console.log(var DolphinDBEntity(re).toScalar());
+});
+
+```
+
+- Run DolphinDB Functions
+
+Use __runFunction(functionName, params, [callback])__ to run DolphinDB functions. For example:
+
+```javascript
+var server = new DolphinDBConnection("http://localhost:8848");
+var param = [{
+        "name": "userId",
+        "form": "scalar",
+        "type": "string",
+        "value": "user1"
+    }, {
+        "name": "password",
+        "form": "scalar",
+        "type": "string",
+        "value": "passwordstring"
+    }];
+server.runFunction("login", param , function(re){
+    if (re.resultCode === "1") {
+        alert(re.msg);
+    }
 });
 ```
 
-### DolphinDB JSON API Reference
-1. run：run asynchronously
+- Login and Logout DolphinDB server
+
+Use __login(userId, password, [callback])__ to login DolphinDB server and use __logout()__ to logout DolphinDB server.
+
+```javascript
+var server = new DolphinDBConnection("http://localhost:8848");
+server.login("user1","pass");
+server.logout();
 ```
-new DatanodeServer("http://[datanodeIp]:[port]").run(script,function(re){
-       //var jsonstr = re;
-       //var DolphinEntity(jsonstr);
-})
-```
-2. runSync：run synchronously
-```
-var re = new DatanodeServer("http://[datanodeIp]:[port]").runSync(script);
-```
-3. login: login server
-```
-new DatanodeServer("http://[datanodeIp]:[port]").login("admin","123456");
-```
-4. logout：logout server
-```
-new DatanodeServer("http://[datanodeIp]:[port]").logout();
-```
+
+> Note:
+> 1. The javascript development kit relies on javascript library JQuery. It can only be used in a browser environment. It is not applicable to the nodejs environment.
+> 2. Web API returns up to 100,000 records at a time.

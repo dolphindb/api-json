@@ -63,7 +63,8 @@ var testSimpleJson = function(){
             "value": code
         }]
     };
-    CallWebApi(server,paramJson,function(re){
+    var conn = new DolphinDBConnection(server);
+    conn.run(code,function(re){
         var result = re.object[0].value;
         new Assert("test simple json").Equal("3",result);
     });
@@ -83,7 +84,8 @@ var testComplexJsonResult = function(){
             "value": code
         }]
     };
-    CallWebApi(server,paramJson,function(re){
+    var conn = new DolphinDBConnection(server);
+    conn.run(code,function(re){
         var result = re.object[0].value;
         console.log(result);
         new Assert("testComplexJsonResult.result.length=2").Equal(2,result.length);
@@ -140,8 +142,8 @@ var testCommplexJsonParam = function(){
             "value": "id"
         }]
     };
-
-    CallWebApi(server,paramJson,function(re){
+    var conn = new DolphinDBConnection(server);
+    conn.run(code, function(re){
         var result = re.object[0].value;
         console.log("testCommplexJsonParam.result = " ,result);
         //new Assert("test simple json").Equal("3",result);
