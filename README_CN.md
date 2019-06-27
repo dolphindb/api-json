@@ -33,7 +33,7 @@ var option = {
 
 *注意在浏览器环境下，JSON里包含+号等特殊符号会被jsonParser处理掉，所以提交前先对要提交的数据做encodeURIComponent*
 
-```json
+```javascript
 var code = "1+2";
 code = encodeURIComponent(code);
 paramJson = {
@@ -48,7 +48,7 @@ paramJson = {
 }
 ```
 > * 返回结果格式
-```json
+```javascript
 resultJson = {
 	"sessionID": "942605602",
 	"resultCode": "0",
@@ -67,7 +67,7 @@ resultJson = {
 这个示例我们会通过DolphinDB script ：select * from table(1..3 as id,'tom' 'bob' 'tony' as name)， 在server端生成一个table,并以json格式返回给客户端，由于DolphinDB Server是以列式存储table数据，所以返回的json也是以多个一维Array组成。
 
 > * 入参格式
-```
+```javascript
 var code = "select * from table(1..3 as id,'tom' 'bob' 'tony' as name)";
 code = encodeURIComponent(code);
 var paramJson = {
@@ -82,7 +82,7 @@ var paramJson = {
 };
 ```
 > * 返回结果格式
-```
+```javascript
 {
 	"sessionID": "1130397736",
 	"resultCode": "0",
@@ -122,7 +122,7 @@ resultTable: table(2 3 as id,'b' 'c' as name,'e' 'f' as rightTable_name)
 
 > * 入参格式
 
-```
+```javascript
 var paramJson = {
         "sessionID": "0",
         "functionName": "ej",
@@ -171,7 +171,7 @@ var paramJson = {
 
 > * 返回结果格式
 
-```
+```javascript
 {
 	"sessionID": "1358033411",
 	"resultCode": "0",
