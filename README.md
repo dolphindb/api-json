@@ -16,7 +16,7 @@ var paramJson = {...}
 var option = {
         url: "http://localhost:8848",
         async: true,
-        data: paramJson,
+        data: JSON.stringify(paramJson),
         type: "POST",
         dataType: "json",
         success: function (data) {
