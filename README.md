@@ -270,5 +270,5 @@ server.logout();
 ```
 
 > Note:
-> 1. The javascript development kit relies on javascript library JQuery. It can only be used in a browser environment. It is not applicable to the nodejs environment.
+> 1. The javascript development kit depends on javascript library JQuery. It can only be used in a browser environment.
 > 2. Web API returns up to 100,000 records at a time.
