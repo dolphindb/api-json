@@ -211,6 +211,8 @@ var paramJson = {
 
 * params: functionName指定参数所需要的入参，params是一个json array。
 
+* length：数组的最大长度或查询table返回的最大行数，默认为1024，最大值为100000。
+
 #####  [返回格式]
 
 * sessionID：本次脚本执行所在的会话ID。
@@ -277,4 +279,31 @@ server.logout();
 
 * javascript开发包依赖JQuery，只能在浏览器环境下使用。
 
-* Web数据接口单表一次最多返回10万条记录。
+* 默认情况下，Web数据接口单表一次返回1024条记录。通过length参数可设置返回更多（上限为10万）条记录。指定length的示例如下：
+```json
+var code = "select * from table(1..200000 as id)";
+code = encodeURIComponent(code);
+var paramJson = {
+    "sessionID": "0",
+    "functionName": "executeCode",
+    "length" : 100000,  //最大为100000，若设置超过100000，实际生效值仍为100000
+    "params": [{
+        "name": "script",
+        "form": "scalar",
+        "type": "string",
+        "value": code
+    }]
+};
+var option = {
+        url: "http://localhost:8848",
+        async: true,
+        data: JSON.stringify(paramJson),
+        type: "POST",
+        dataType: "json",
+        success: function (data) {
+            var resultJson = data; //data={...}
+            console.log(resultJson);
+        }
+    }
+$.ajax(option);
+```
