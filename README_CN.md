@@ -280,7 +280,7 @@ server.logout();
 * javascript开发包依赖JQuery，只能在浏览器环境下使用。
 
 * 默认情况下，Web数据接口单表一次返回1024条记录。通过length参数可设置返回更多（上限为10万）条记录。指定length的示例如下：
-```json
+```javascript
 var code = "select * from table(1..200000 as id)";
 code = encodeURIComponent(code);
 var paramJson = {
